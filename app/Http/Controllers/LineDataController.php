@@ -21,7 +21,22 @@ class LineDataController extends Controller
 
         $this->processData(BillingProduct::whereNotIn('article_id', explode(',', $request->input( 'exclude')))->get());
 
-        return json_encode($this->lineData);
+        return json_encode($this->formatData());
+    }
+
+    private function formatData()
+    {
+        $data2 = [];
+        $i = 0;
+
+        foreach ($this->lineData as $client => $data) {
+            $item = new \stdClass();
+            $item->name = $client;
+            $item->value = $data;
+            $data2[] = $item;
+        }
+
+        return $data2;
     }
 
     private function processData($products)
@@ -50,7 +65,7 @@ class LineDataController extends Controller
         $total = $diffFrom + $diffTo - 1;
 
         for ($i = 0; $i < $total; $i++) {
-            $key = $currentMonth->format('d M Y');
+            $key = $currentMonth->format('d-m-y');
 
             if (!\array_key_exists($key, $this->lineData)) {
                 $this->lineData[$key] = $product->price;
@@ -71,7 +86,7 @@ class LineDataController extends Controller
         $total = $diffFrom + $diffTo;
 
         for ($i = 0; $i < $total; $i++) {
-            $key = $currentMonth->format('d M Y');
+            $key = $currentMonth->format('d-m-y');
 
             if (!\array_key_exists($key, $this->lineData)) {
                 $this->lineData[$key] = $product->price;
@@ -92,7 +107,7 @@ class LineDataController extends Controller
         $total = $diffFrom + $diffTo + 1;
 
         for ($i = 0; $i < $total; $i++) {
-            $key = $currentMonth->format('d M Y');
+            $key = $currentMonth->format('d-m-y');
 
             if (!\array_key_exists($key, $this->lineData)) {
                 $this->lineData[$key] = $product->price;
