@@ -27,7 +27,16 @@ class LineDataController extends Controller
     private function formatData()
     {
         $data2 = [];
-        $i = 0;
+        \uksort($this->lineData, function($a, $b) {
+            $a = Carbon::createFromFormat('d-m-y', $a);
+            $b = Carbon::createFromFormat('d-m-y', $b);
+
+            if ($a->gt($b)) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
 
         foreach ($this->lineData as $client => $data) {
             $item = new \stdClass();

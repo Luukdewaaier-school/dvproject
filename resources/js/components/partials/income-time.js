@@ -1,94 +1,40 @@
 import React from 'react';
 
-import moment from 'moment';
+import axios from 'axios';
 import {store} from 'statorgfc';
 import {LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, Legend} from 'recharts';
 
-const data = [
-    {
-        "name": "01-08-18",
-        "value": 76200
-    },
-    {
-        "name": "01-08-19",
-        "value": 76200
-    },
-    {
-        "name": "01-08-20",
-        "value": 76200
-    },
-    {
-        "name": "01-08-21",
-        "value": 76200
-    },
-    {
-        "name": "01-01-18",
-        "value": 129693
-    },
-    {
-        "name": "01-04-18",
-        "value": 129693
-    },
-    {
-        "name": "01-07-18",
-        "value": 129693
-    },
-    {
-        "name": "01-10-18",
-        "value": 129693
-    },
-    {
-        "name": "01-01-19",
-        "value": 129693
-    },
-    {
-        "name": "01-04-19",
-        "value": 129693
-    },
-    {
-        "name": "01-07-19",
-        "value": 129693
-    },
-    {
-        "name": "01-10-19",
-        "value": 129693
-    },
-    {
-        "name": "01-01-20",
-        "value": 129693
-    },
-    {
-        "name": "01-04-20",
-        "value": 129693
-    },
-    {
-        "name": "01-07-20",
-        "value": 129693
-    },
-    {
-        "name": "01-10-20",
-        "value": 129693
-    },
-    {
-        "name": "01-01-21",
-        "value": 129693
-    },
-    {
-        "name": "01-04-21",
-        "value": 129693
-    },
-    {
-        "name": "01-07-21",
-        "value": 129693
-    }
-];
-
 export default class IncomeTime extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data2: []
+        };
+
+        store.connectComponentState(this, ['date', 'data'])
+    }
+
+    componentDidMount() {
+        this.getData();
+    }
+
+    getData() {
+        axios.get('/data/line?from=' + this.state.date.from.replace(/\//g, '-') + '&to=' + this.state.date.to.replace(/\//g, '-'))
+            .then(response => {
+                this.setState({data2: response.data});
+            })
+            .catch(response => {
+                console.log(response);
+            })
+    }
+
     render() {
         return (
             <div className="col-lg-12">
-                <h1>linechart</h1>
-                <LineChart width={1850} height={400} data={data}
+                <h3>Income over time</h3>
+                <LineChart width={window.innerWidth - 50} height={400} data={this.state.data2}
                            margin={{top: 20, right: 50, left: 20, bottom: 5}}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="name"/>
