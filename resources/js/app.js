@@ -1,3 +1,11 @@
+$.ajaxSetup({
+    beforeSend: function(xhr, type) {
+        if (!type.crossDomain) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+        }
+    },
+});
+
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13,4 +21,4 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
+require('./components/main-component');

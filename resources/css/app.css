@@ -1,0 +1,8 @@
+.custom-row {
+    height: 50vh;
+}
+
+.finished-row {
+    max-height: 40vh;
+    overflow-y: scroll;
+}

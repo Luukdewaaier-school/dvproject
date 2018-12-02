@@ -9,8 +9,21 @@ class BillingProduct extends Model
     protected $table = 'billing_product';
 
     protected $with = [
-        'article',
+//        'article',
     ];
+
+    protected $appends = [
+        'expiration'
+    ];
+
+    public function getExpirationAttribute()
+    {
+        if ($this->expiration_date === null) {
+            return BillingProduct::where('id', $this->parent_id)->first()->expiration_date;
+        }
+
+        return $this->expiration_date;
+    }
 
     /**
      * Get the article that belongs to the product

@@ -10,15 +10,25 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "axios": "^0.18",
+        "axios": "^0.18.0",
         "babel-preset-react": "^6.23.0",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
-        "jquery": "^3.2",
+        "jquery": "^3.3.1",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
-        "react": "^16.2.0",
+        "react": "^16.6.3",
         "react-dom": "^16.2.0"
+    },
+    "dependencies": {
+        "bootstrap-daterangepicker": "^3.0.3",
+        "moment": "^2.22.2",
+        "moment-range": "^4.0.1",
+        "prop-types": "^15.6.2",
+        "react-bootstrap-daterangepicker": "^4.1.0",
+        "react-daterange-picker": "^2.0.1",
+        "recharts": "^1.4.1",
+        "statorgfc": "^0.1.6"
     }
 }

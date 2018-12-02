@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/data', 'DataController@getData');
+
+Route::get('/data/line', 'LineDataController@getLineData');
