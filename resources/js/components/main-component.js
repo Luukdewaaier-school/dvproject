@@ -55,7 +55,7 @@ export default class MainComponent extends Component {
                     <IncomePie/>
                     <DistributionPie/>
                 </div>
-                <div className="row custom-row">
+                <div>
                     <IncomeTime/>
                 </div>
             </div>
