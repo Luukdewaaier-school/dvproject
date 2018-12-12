@@ -13,8 +13,8 @@ import '../../css/app.css';
 
 store.initialize({
     date: {
-        from: '1/1/2018',
-        to: '12/31/2020'
+        from: new Date(2018, 0, 1),
+        to: new Date(2020, 11, 30)
     },
     data: {
         almostFinished: [],
@@ -38,13 +38,18 @@ export default class MainComponent extends Component {
     }
 
     getData() {
-        ax.get('/data?from=' + this.state.date.from.replace(/\//g, '-') + '&to=' + this.state.date.to.replace(/\//g, '-'))
+        let from = this.state.date.from.getMonth() + '-' + this.state.date.from.getDate() + '-' + this.state.date.from.getFullYear();
+        let to = this.state.date.to.getMonth() + '-' + this.state.date.to.getDate() + '-' + this.state.date.to.getFullYear();
+
+        ax.get('/data?from=' + from + '&to=' + to)
             .then(response => {
                 store.set({data: response.data});
             })
             .catch(response => {
                 console.log(response);
-            })
+            });
+
+        this.child.getData();
     }
 
     render() {
@@ -56,7 +61,7 @@ export default class MainComponent extends Component {
                     <DistributionPie/>
                 </div>
                 <div>
-                    <IncomeTime/>
+                    <IncomeTime onRef={ref => (this.child = ref)}/>
                 </div>
             </div>
         );

@@ -68,10 +68,14 @@ class DataController extends Controller
             $item = new \stdClass();
             $item->name = $client;
             $item->value = $data;
-            $item->fill = $this->colors[$i];
+//            $item->fill = $this->colors[$i];
             $i++;
             $data2[] = $item;
         }
+
+        \usort($data2, function($a, $b) {
+            return $b->value - $a->value;
+        });
 
         return $data2;
     }
@@ -85,10 +89,14 @@ class DataController extends Controller
             $item = new \stdClass();
             $item->name = $period;
             $item->value = $data;
-            $item->fill = $this->colors[$i];
+//            $item->fill = $this->colors[$i];
             $i++;
             $data2[] = $item;
         }
+
+        \usort($data2, function($a, $b) {
+            return $b->value - $a->value;
+        });
 
         return $data2;
     }
@@ -162,5 +170,10 @@ class DataController extends Controller
         } else {
             $this->clientData[$clientKey] = $value;
         }
+    }
+
+    private function customArraySort($a, $b)
+    {
+        return $a->value - $b->value;
     }
 }
