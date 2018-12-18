@@ -11,6 +11,9 @@ export default class IncomeTime extends React.Component {
 
         this.state = {
             data2: [],
+            maxValue: 140000,
+            oldFrom: null,
+            oldTo: null,
             domain: true,
             hosting: true,
             search: true,
@@ -55,6 +58,8 @@ export default class IncomeTime extends React.Component {
                 return 5;
             case 'print':
                 return 6;
+            default:
+                return 7;
         }
     }
 
@@ -65,18 +70,40 @@ export default class IncomeTime extends React.Component {
         let excludes = [];
 
         for (let key in this.state) {
-            if (this.state.hasOwnProperty(key) && key !== 'data2' && !this.state[key]) {
+            if (this.state.hasOwnProperty(key) && !this.state[key]) {
                 excludes.push(this.getIndex(key));
             }
         }
 
         axios.get('/data/line?from=' + from + '&to=' + to + '&exclude=' + excludes.join(','))
             .then(response => {
+                if (from !== this.state.oldFrom || to !== this.state.oldTo) {
+                    console.log('lele');
+                    this.setState({
+                        oldFrom: from,
+                        oldTo: to
+                    });
+
+                    this.calculateMaxValue();
+                }
+
                 this.setState({data2: response.data});
             })
             .catch(response => {
                 console.log(response);
             })
+    }
+
+    calculateMaxValue() {
+        let maxValue = 0;
+
+        this.state.data2.map((item) => {
+            if (item.value > maxValue) {
+                maxValue = item.value;
+            }
+        });
+
+        this.setState({maxValue: maxValue})
     }
 
     render() {
@@ -88,11 +115,11 @@ export default class IncomeTime extends React.Component {
                                margin={{top: 20, right: 50, left: 20, bottom: 5}}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="name"/>
-                        <YAxis/>
+                        <YAxis type="number" domain={['auto', 140000]}/>
                         <Tooltip/>
                         {/*<ReferenceLine x={moment.now().format('d MMM YYYY')} stroke="red" label="Max PV PAGE"/>*/}
                         {/*<ReferenceLine y={9800} label="Max" stroke="red"/>*/}
-                        <Line type="monotone" dataKey="value" stroke="#8884d8"/>
+                        <Line type="monotone" dataKey="value" stroke="#ff9933"/>
                         {/*<Line type="monotone" dataKey="uv" stroke="#82ca9d" />*/}
                     </LineChart>
                 </div>

@@ -21,7 +21,7 @@ export default class IncomePie extends React.Component {
                     <XAxis dataKey="name"/>
                     <YAxis/>
                     <Tooltip/>
-                    <Bar dataKey="value" fill="#8884d8"/>
+                    <Bar dataKey="value" fill="#006400"/>
                 </BarChart>
             </div>
         )
