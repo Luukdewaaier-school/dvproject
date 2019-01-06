@@ -117,7 +117,7 @@ export default class IncomeTime extends React.Component {
                         <XAxis dataKey="name"/>
                         <YAxis type="number" domain={['auto', 140000]}/>
                         <Tooltip/>
-                        <Line type="monotone" dataKey="value" stroke="#ff9933"/>
+                        <Line type="monotone" dataKey="value" stroke="#ff9933" strokeWidth={3}/>
                     </LineChart>
                 </div>
                 <div className="col-lg-2">
