@@ -4,6 +4,9 @@ import axios from 'axios';
 import {store} from 'statorgfc';
 import {LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, Legend} from 'recharts';
 
+let date = new Date();
+let today = '01-0' + (date.getMonth() + 1) + '-' + date.getFullYear().toString().substr(-2);
+
 export default class IncomeTime extends React.Component {
 
     constructor(props) {
@@ -116,6 +119,7 @@ export default class IncomeTime extends React.Component {
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="name"/>
                         <YAxis type="number" domain={['auto', 140000]}/>
+                        <ReferenceLine x={today} label="Current" stroke="black"/>
                         <Tooltip/>
                         <Line type="monotone" dataKey="value" stroke="#ff9933" strokeWidth={3}/>
                     </LineChart>
